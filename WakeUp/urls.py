@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^register/$', ajax_views.register, name='register'),
     url(r'^user/(?P<user_id>\d+)$', ajax_views.get_user, name='get_user'),
     #main screen
+    #schedule alarm
+    url(r'schedule_alarm/$', app.views.schedule_alarm, name='schedule_alarm'),
     #active section
     url(r'active/$', app.views.active, name='active'),
     #final call

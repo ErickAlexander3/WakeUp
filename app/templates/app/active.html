@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,8 +15,10 @@
 <body>
 
     <div class="container">
-        <div class="row">
+        <div id="searching" class="row text-center">
             Looking for requests!
+        </div>
+        <div id="extra-stuff">
         </div>
     </div>
 
@@ -67,7 +69,7 @@
         var data = {'user_id': user_id};
 
         function get_permission(){
-            console.log(trying);
+            console.log('trying');
             var request_call = $.ajax({
                 type: "POST",
                 url: "/permission/",
@@ -76,10 +78,15 @@
             request_call.done(function(data){
                 if (data.permission_status === false){
                     console.log('didnt get shit');
-                    setTimeout(function() {}, 1000);
-                    get_permission();
+                    setTimeout(get_permission, 5000);
                 } else {
                     console.log('shit to process');
+                    var request_container = $('#extra-stuff');
+                    request_container.append(data.description + '<br>');
+                    request_container.append(data.requestee_number + '<br>');
+                    request_container.append(data.request_id);
+                    request_container.show();
+                    $('#searching').hide();
                 }
             })
         }

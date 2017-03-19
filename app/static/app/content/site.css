@@ -22,6 +22,10 @@ body {
     display: none;
 }
 
+#extra-stuff {
+    display: none;
+}
+
 input {
     padding: 10px;
     width: 100%;

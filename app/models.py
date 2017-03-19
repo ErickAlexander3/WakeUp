@@ -22,5 +22,5 @@ class CallRequest(models.Model):
     time_of_call = models.DateTimeField()
     is_pending = models.BooleanField(default = False)
     is_completed = models.BooleanField(default=False)
-    completed_by = models.ForeignKey(User, related_name = 'completed_requests', on_delete=models.CASCADE)
+    completed_by = models.ForeignKey(User, related_name = 'completed_requests', on_delete=models.CASCADE, null=True)
 

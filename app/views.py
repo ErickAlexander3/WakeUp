@@ -7,20 +7,19 @@ from django.http import HttpRequest, JsonResponse
 from django.template import RequestContext
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
-
+from app.models import *
 from twilio.rest import TwilioRestClient
 
 def home(request):
     """Renders the home page."""
     if request.user.is_authenticated():
-        return active(request)
+        return schedule_alarm(request)
 
     return render(
         request,
         'app/layout.html',
         {
             'title':'Home Page',
-            'year':datetime.now().year,
         }
     )
 @login_required(login_url='/')
@@ -29,7 +28,22 @@ def main(request):
 
 @login_required(login_url='/')
 def active(request):
-    return render(request, 'app/active.html', {'user_id':request.user.id})   
+    profile = request.user.userprofile
+    profile.active = True
+    profile.save()
+    return render(request, 'app/active.html', {'user_id':request.user.id})
+
+@login_required(login_url='/')
+def schedule_alarm(request):
+    if request.method == 'POST':
+        data = request.POST
+        time_of_call = data.get('time_of_call')
+        if time_of_call == '':
+            time_of_call = datetime.datetime.now() + datetime.timedelta(minutes = 1)
+        new_request = CallRequest.objects.create(requestee=request.user, description=data['description'], time_of_call=time_of_call)
+        new_request.save()
+        print("added request")
+    return render(request, 'app/schedule_alarm.html', {'user_id':request.user.id})   
 
 @login_required(login_url='/')
 def call(request):
@@ -52,5 +66,6 @@ def call(request):
            from_="+17782002728", 
            url="https://handler.twilio.com/twiml/EH71f7a1a190bb7c849ae7501978e3ef80",  
            method="POST" 
-        )  
+        )
+
     return render()
