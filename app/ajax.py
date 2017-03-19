@@ -49,7 +49,7 @@ def register(request):
     if not User.objects.filter(username=username).exists() and not UserProfile.objects.filter(phone_number=phone_number).exists():
         new_user = User.objects.create_user(username, email, password)
         new_user_profile = UserProfile.objects.create(user=new_user, phone_number=phone_number)
-        login(username, password)
+        login(request, new_user)
         server_data['registered'] = True
     else:
         server_data['registered'] = False

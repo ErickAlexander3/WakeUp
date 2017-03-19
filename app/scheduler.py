@@ -21,9 +21,10 @@ def getUserPriorities():
         #mostRecentCompletion = user.completedRequests.aggregate(Max('time_of_call'))['time_of_call__max']
         mostRecentCompletition = user.most_recent_call
         if mostRecentCompletition:
-            priorityScore = (datetime.datetime.now() - mostRecentCompletition).totalSeconds
+            priorityScore = (datetime.datetime.now() - mostRecentCompletition).seconds
         else:
-            priorityScore = 9999
+            priorityScore = 100
+        print(priorityScore)
         scoreTracker[priorityScore] = user
 
     priorityList = []
@@ -38,16 +39,18 @@ def getBestRequest(user_id):
     earliestDeadline = activeRequests.aggregate(Min('time_of_call'))['time_of_call__min']
     try:
         print(earliestDeadline)
-        bestRequest = activeRequests.get(time_of_call = earliestDeadline)
+        bestRequest = activeRequests.filter(time_of_call = earliestDeadline).first()
+        print(bestRequest.requestee_id)
+        print(user_id)
     except:
         bestRequest = None
     return bestRequest
 
 def getPermission(request):
     user_id = request.POST.get('user_id')
-    priorityList = getUserPriorities()
+    #priorityList = getUserPriorities()
     #if this user is in the top 20% of user priority
-    if int(user_id) == priorityList[0]:
+    if True:#int(user_id) == priorityList[0]:
         print('this should be happening')
         approvedRequest = getBestRequest(user_id)
         print(approvedRequest)

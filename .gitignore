@@ -55,3 +55,5 @@ app/migrations/__pycache__/
 *.user
 SocialVounteer.pyproj.user
 
+WakeUp/__pycache__/urls.cpython-34.pyc
+WakeUp/__pycache__/settings.cpython-34.pyc

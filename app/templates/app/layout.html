@@ -107,8 +107,7 @@
 
             first_request.done(function (data) {
                 if (data['logged'] === true) {
-                    alert('LOGGED');
-                    //window.location.href = 'http://13.88.255.176/';
+                    window.location.href = $(location).attr('href');
                 } else {
                     $('#general-form').slideToggle();
                     $('#second-form').slideToggle();
@@ -132,8 +131,7 @@
 
             second_request.done(function (data) {
                 if (data['registered'] === true) {
-                    alert('REGISTERED AND LOGGED');
-                    //window.location.href = 'http://13.88.255.176/';
+                    window.location.href = $(location).attr('href');
                 } else {
                     $('#general-form').slideToggle();
                     $('#second-form').slideToggle();

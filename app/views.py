@@ -47,14 +47,16 @@ def schedule_alarm(request):
 
 @login_required(login_url='/')
 def call(request):
-
+    data = request.POST
+    request_phone_number = data.get('phone_number')
+    request_id = data.get('request_id')
     # CLIENT 
     account_sid = "AC522687aea3e01be358218bfc878b4493"
     auth_token = "41be5156464d76f2b0150475e1aaf8e3"
     client = TwilioRestClient(account_sid, auth_token)
 
     call1 = client.calls.create(
-           to="+17783239437", 
+           to=request.user.userprofile.phone_number, 
            from_="+17782002728", 
            url="https://handler.twilio.com/twiml/EH71f7a1a190bb7c849ae7501978e3ef80",  
            method="POST" 
@@ -62,10 +64,16 @@ def call(request):
 
     call2 = client.calls.create(
            #to="+17788550329",
-           to="+18072201876",
+           to=request_phone_number,
            from_="+17782002728", 
            url="https://handler.twilio.com/twiml/EH71f7a1a190bb7c849ae7501978e3ef80",  
            method="POST" 
         )
 
-    return render()
+    call_request = CallRequest.objects.get(id=request_id)
+    call_request.is_pending = False
+    call_request.is_completed = True
+    call_request.completed_by = request.user
+    call_request.save()
+
+    return JsonResponse({'succeded': True})

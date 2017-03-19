@@ -19,6 +19,7 @@
             Looking for requests!
         </div>
         <div id="extra-stuff">
+
         </div>
     </div>
 
@@ -82,16 +83,37 @@
                 } else {
                     console.log('shit to process');
                     var request_container = $('#extra-stuff');
-                    request_container.append(data.description + '<br>');
-                    request_container.append(data.requestee_number + '<br>');
-                    request_container.append(data.request_id);
+                    request_container.append(data.description + '<br><br>');
+                    var button1 = '<a id="call-button" class="btn btn-default">Start Call</a>'
+                    var button2 = '<a class="btn btn-danger" href="/active/">Cancel</a>'
+                    request_container.append(button1);
+                    request_container.append(button2);
                     request_container.show();
                     $('#searching').hide();
+
+                    $('#call-button').click(function(e){
+                        e.preventDefault();
+                        data = {'phone_number': data.requestee_number, 'request_id':data.request_id}
+                        var another_ajax = $.ajax({
+                            type: "POST",
+                            url: "/call/",
+                            data: data,
+                        })
+
+                        another_ajax.done(function(data){
+                            $('#extra-stuff').html('<div class="row text-center">Call In Process...</div>');
+                            $('#extra-stuff').append(button2);
+                        })
+                    })
                 }
             })
         }
 
         get_permission();
+
+        $('#call-button').click(function(e){
+            e
+        })
     </script>
     </body>
 </html>
