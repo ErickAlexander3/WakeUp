@@ -16,6 +16,6 @@ class UserProfile(models.Model):
 class Request(models.Model):
     requestee = models.ForeignKey(User, related_name='requests', on_delete=models.CASCADE)
     description = models.TextField()
-    time_of_call = models.DateTimeField(required=True)
+    time_of_call = models.DateTimeField()
     is_taken = models.BooleanField(default=False)
     is_completed = models.BooleanField(default=False)
