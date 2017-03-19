@@ -8,6 +8,7 @@ import django.contrib.auth.views
 
 import app.forms
 import app.views
+import app.scheduler
 import app.ajax as ajax_views
 
 # Uncomment the next lines to enable the admin:
@@ -18,6 +19,7 @@ import app.ajax as ajax_views
 urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
+    url(r'^permission/$', app.scheduler.getPermission, name = 'permission'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
@@ -36,6 +38,7 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
+    #login and registration
     url(r'^login_or_register/$', ajax_views.login_or_register, name='login_or_register'),
     url(r'^register/$', ajax_views.register, name='register'),
     url(r'^user/(?P<user_id>\d+)$', ajax_views.get_user, name='get_user'),
@@ -43,8 +46,7 @@ urlpatterns = [
     #active section
     url(r'active/$', app.views.active, name='active'),
     #final call
-    url(r'call', app.views.call, name='call'),
-
+    url(r'call/$', app.views.call, name='call'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -34,6 +34,7 @@
     </Compile>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
+    <Compile Include="app\scheduler.py" />
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -82,7 +83,7 @@
     <Content Include="app\static\app\scripts\respond.js" />
     <Content Include="app\static\app\scripts\respond.min.js" />
     <Content Include="app\static\app\scripts\_references.js" />
-    <Content Include="app\templates\app\index.html" />
+    <Content Include="app\templates\app\active.html" />
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
   </ItemGroup>

@@ -23,11 +23,15 @@ def home(request):
             'year':datetime.now().year,
         }
     )
+@login_required(login_url='/')
+def main(request):
+    pass
 
 @login_required(login_url='/')
 def active(request):
-    return render(request, 'app/active.html', {})   
+    return render(request, 'app/active.html', {'user_id':request.user.id})   
 
+@login_required(login_url='/')
 def call(request):
 
     # CLIENT 

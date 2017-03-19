@@ -7,6 +7,9 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script>
+        var user_id = {{user_id}};
+    </script>
 </head>
 
 <body>
@@ -20,5 +23,68 @@
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+
+    <script>
+        /*
+         * General setup
+         */
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        //get csrf token
+        var csrftoken = getCookie('csrftoken');
+
+
+        //set up the ajax requests
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+        var data = {'user_id': user_id};
+
+        function get_permission(){
+            console.log(trying);
+            var request_call = $.ajax({
+                type: "POST",
+                url: "/permission/",
+                data: data,
+            })
+            request_call.done(function(data){
+                if (data.permission_status === false){
+                    console.log('didnt get shit');
+                    setTimeout(function() {}, 1000);
+                    get_permission();
+                } else {
+                    console.log('shit to process');
+                }
+            })
+        }
+
+        get_permission();
+    </script>
     </body>
 </html>
