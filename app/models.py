@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=15, unique=True)
     active = models.BooleanField(default=False)
 
-class Request(models.Model):
+class CallRequest(models.Model):
     requestee = models.ForeignKey(User, related_name='requests', on_delete=models.CASCADE)
     description = models.TextField()
     time_of_call = models.DateTimeField()

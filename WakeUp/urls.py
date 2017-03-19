@@ -8,6 +8,7 @@ import django.contrib.auth.views
 
 import app.forms
 import app.views
+import app.ajax as ajax_views
 
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
@@ -17,8 +18,6 @@ import app.views
 urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
-    url(r'^contact$', app.views.contact, name='contact'),
-    url(r'^about', app.views.about, name='about'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
@@ -37,6 +36,10 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
+    url(r'^register$', app.views.register, name='register'),
+    url(r'^register_user$', ajax_views.register_user, name='register_user'),
+    url(r'^user/(?P<user_id>\d+)$', ajax_views.get_user, name='get_user'),
+
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
