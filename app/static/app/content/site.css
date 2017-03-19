@@ -1,42 +1,33 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+	height: 100%;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
+body {
+    padding-top: 100px;
+    padding-bottom: 20px;
+    background: white;
+	font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-size: 28px;
+    background: url("images/background.png");
+    background-size: cover;
+	background-position: center;
+    color: white;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
-}
-
-.field-validation-valid {
+#second-form {
     display: none;
 }
 
-input.input-validation-error {
-    border: 1px solid #b94a48;
+input {
+    padding: 10px;
+    width: 100%;
 }
 
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
-}
-
-.validation-summary-errors {
-    color: #b94a48;
-}
-
-.validation-summary-valid {
-    display: none;
+.center-self {
+    margin-left: auto;
+    margin-right: auto;
 }

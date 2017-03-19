@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     callFreq = models.DecimalField(default = 1)
     pendingCallRequest = models.BooleanField(default = False)
 
-class Request(models.Model):
+class CallRequest(models.Model):
     requestee = models.ForeignKey(User, related_name='requests', on_delete=models.CASCADE)
     description = models.TextField()
     time_of_call = models.DateTimeField()

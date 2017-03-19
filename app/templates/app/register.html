@@ -1,0 +1,22 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<form action="/register_user" method="post">
+    {% csrf_token %}
+    Username:<br>
+    <input type="text" name="username"><br>
+    Phone Number:<br>
+    <input type="text" name="phone_number"><br>
+    Email:<br>
+    <input type="text" name="email"><br>
+    Password:<br>
+    <input type="password" name="password"><br>
+    <input type="submit" value="Submit">
+</form>
+
+
+
+{% endblock %}
