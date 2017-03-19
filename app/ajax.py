@@ -14,21 +14,38 @@ from app.forms import *
 from django.contrib.auth import get_user_model
 from app.models import UserProfile, CallRequest
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from time import time
 
 
-def register_user(request):
+def login_or_register(request):
     ##only allow ajax requests
     #if not request.is_ajax():
     #    return
     request_data = request.POST
-    username = request_data.get('username')
-    phone_number = request_data.get('phone_number')
     server_data = {}
+    username = request_data.get('username')
+    password = request_data.get('password')
+    print(username, password)
     #register only if username and phone number don't exist in the database
-    if not User.objects.filter(username=username).exists() or not UserProfile.objects.filter(phone_number=phone_number).exists():
-        email = request_data.get('email')
-        password = request_data.get('password')
+    user = authenticate(username=username, password=password)
+    if user is None:
+        server_data['logged'] = False
+    else:
+        server_data['logged'] = True
+
+    return JsonResponse(server_data)
+
+
+def register(request):
+    request_data = request.POST
+    server_data = {}
+    username = request_data.get('username')
+    password = request_data.get('password')
+    phone_number = request_data.get('phone_number')
+    email = request_data.get('email')
+    print(username, password, phone_number, email)
+    if not User.objects.filter(username=username).exists() and not UserProfile.objects.filter(phone_number=phone_number).exists():
         new_user = User.objects.create_user(username, email, password)
         new_user_profile = UserProfile.objects.create(user=new_user, phone_number=phone_number)
         server_data['registered'] = True

@@ -3,20 +3,31 @@
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 100px;
     padding-bottom: 20px;
     background: white;
 	font-family: 'Lato', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    font-size: 28px;
     background: url("images/background.png");
     background-size: cover;
 	background-position: center;
     color: white;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+#second-form {
+    display: none;
+}
+
+input {
+    padding: 10px;
+    width: 100%;
+}
+
+.center-self {
+    margin-left: auto;
+    margin-right: auto;
 }

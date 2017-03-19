@@ -83,18 +83,15 @@ WSGI_APPLICATION = 'WakeUp.wsgi.application'
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
 #}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'wakeup-api',
-        'USER': 'wakeup-api-services',
-        'PASSWORD': 'Z6f5LTjZ1qhOAjAtJIwA',
-        'HOST': 'wakeup-db.database.windows.net',
-        'PORT': '1433',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 13 for SQL Server',
-            'MARS_Connection': 'True',
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wakeup',
+        'USER': 'wakeupuser',
+        'PASSWORD': 'wakeuppassword',
+        'HOST': '13.88.255.176',
+        'PORT': '5432'
     }
 }
 

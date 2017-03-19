@@ -14,14 +14,132 @@
 
     <div class="container">
         <div class="row">
-            <img class="col-md-4 col-md-offset-4" src="{% static 'app/content/images/logo.png' %}"/>
+            <img class="img-responsive center-self" src="{% static 'app/content/images/logo.png' %}" height="250" width="250"/>
         </div>
+        <div class="row text-center">
+            <br />
+            Never miss an alarm again! <br />
+            Have real people give you a real wake up call or a reminder, anonymously <br /><br />
+        </div>
+        <div class="row">
+            <form id='general-form' class='col-4 col-offset-4 col-sm-4 col-sm-offset-4'>
+                {% csrf_token %}
+                Login (or Register):<br/>
+                <input type="text" name="username" placeholder="Username"><br><br>
+                <input type="password" name="password" placeholder="Password"><br><br />
+                <button class="submit-now" type="submit" style="border: 0; background: transparent">
+                    <img class="img-responsive center-elm" src="{% static 'app/content/images/start-now.png' %}" height="100" width="400" alt="submit"/>
+                </button>
+            </form>
+            <form id="second-form" class="col-4 col-offset-4 col-sm-4 col-sm-offset-4">
+                {% csrf_token %}
+                Phone Number:<br>
+                <input type="text" name="phone_number" placeholder="Phone Number"><br><br>
+                Email:<br>
+                <input type="text" name="email"><br><br>
+                <button class="submit-now" type="submit" style="border: 0; background: transparent">
+                    <img class="img-responsive center-elm" src="{% static 'app/content/images/start-now.png' %}" height="100" width="400" alt="submit"/>
+                </button>
+                PD: For real this time!
+            </form>
+        </div>
+
     </div>
 
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
-{% block scripts %}{% endblock %}
 
+    <script>
+        /*
+         * General setup
+         */
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = $.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        //get csrf token
+        var csrftoken = getCookie('csrftoken');
+
+
+        //set up the ajax requests
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+    </script>
+
+    <script>
+        function extend(obj, src) {
+            Object.keys(src).forEach(function (key) { obj[key] = src[key]; });
+            return obj;
+        }
+
+        $('#general-form').submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            var first_request = $.ajax({
+                type: "POST",
+                url: "/login_or_register/",
+                data: data,
+                async: true,
+            })
+
+            first_request.done(function (data) {
+                if (data['logged'] === true) {
+                    alert('LOGGED');
+                    window.location.href = 'http://13.88.255.176/';
+                } else {
+                    $('#general-form').slideToggle();
+                    $('#second-form').slideToggle();
+                }
+            })
+        })
+
+        $('#second-form').submit(function (e) {
+            e.preventDefault();
+            var data1 = $(this).serialize();
+            var data2 = $('#general-form').serialize();
+            data1.username = data2.username;
+            data1.password = data2.password;
+            console.log(data1);
+            var second_request = $.ajax({
+                type: "POST",
+                url: "/register/",
+                data: data1 + '&' + data2,
+                async: true,
+            })
+
+            second_request.done(function (data) {
+                if (data['registered'] === true) {
+                    alert('REGISTERED AND LOGGED');
+                    window.location.href = 'http://13.88.255.176/';
+                } else {
+                    $('#general-form').slideToggle();
+                    $('#second-form').slideToggle();
+                }
+            })
+        })
+    </script>
 </body>
 </html>

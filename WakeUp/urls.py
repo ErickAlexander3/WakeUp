@@ -36,8 +36,8 @@ urlpatterns = [
             'next_page': '/',
         },
         name='logout'),
-    url(r'^register$', app.views.register, name='register'),
-    url(r'^register_user$', ajax_views.register_user, name='register_user'),
+    url(r'^login_or_register/$', ajax_views.login_or_register, name='login_or_register'),
+    url(r'^register/$', ajax_views.register, name='register'),
     url(r'^user/(?P<user_id>\d+)$', ajax_views.get_user, name='get_user'),
 
 
