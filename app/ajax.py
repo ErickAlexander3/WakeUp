@@ -14,7 +14,7 @@ from app.forms import *
 from django.contrib.auth import get_user_model
 from app.models import UserProfile, CallRequest
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from time import time
 
 
@@ -32,6 +32,7 @@ def login_or_register(request):
     if user is None:
         server_data['logged'] = False
     else:
+        login(request, user)
         server_data['logged'] = True
 
     return JsonResponse(server_data)
@@ -48,6 +49,7 @@ def register(request):
     if not User.objects.filter(username=username).exists() and not UserProfile.objects.filter(phone_number=phone_number).exists():
         new_user = User.objects.create_user(username, email, password)
         new_user_profile = UserProfile.objects.create(user=new_user, phone_number=phone_number)
+        login(username, password)
         server_data['registered'] = True
     else:
         server_data['registered'] = False

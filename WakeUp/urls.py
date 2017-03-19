@@ -39,6 +39,11 @@ urlpatterns = [
     url(r'^login_or_register/$', ajax_views.login_or_register, name='login_or_register'),
     url(r'^register/$', ajax_views.register, name='register'),
     url(r'^user/(?P<user_id>\d+)$', ajax_views.get_user, name='get_user'),
+    #main screen
+    #active section
+    url(r'active/$', app.views.active, name='active'),
+    #final call
+    url(r'call', app.views.call, name='call'),
 
 
     # Uncomment the admin/doc line below to enable admin documentation:
