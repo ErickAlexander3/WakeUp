@@ -45,3 +45,13 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.vs
+env
+SocialVounteer/__pycache__/
+app/__pycache__/
+app/migrations/__pycache__/
+
+*.user
+SocialVounteer.pyproj.user
+
