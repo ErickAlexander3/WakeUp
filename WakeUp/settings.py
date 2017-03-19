@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7de4d0f4-dd1e-4b92-81c9-744d18ab4e84'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["0.0.0.0", "10.19.129.109", "localhost"]
+DEBUG = False
+#ALLOWED_HOSTS = ["0.0.0.0", "10.19.129.109", "localhost"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -77,23 +77,23 @@ WSGI_APPLICATION = 'WakeUp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 #DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'wakeup',
-#        'USER': 'wakeupuser',
-#        'PASSWORD': 'wakeuppassword',
-#        'HOST': '13.88.255.176',
-#        'PORT': '5432'
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
 #}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wakeup',
+        'USER': 'wakeupuser',
+        'PASSWORD': 'wakeuppassword',
+        'HOST': '13.88.255.176',
+        'PORT': '5432'
+    }
+}
 
 
 # Password validation
