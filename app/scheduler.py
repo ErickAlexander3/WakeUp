@@ -6,12 +6,10 @@ from django.core import serializers
 from django.http import JsonResponse
 import math
 
-
-
 def getUserPriorities():
     """ Returns a list of userIDs for all active users in order of their priority"""
 
-    activeUsers = UserProfile.entries.filter(active = True)
+    activeUsers = UserProfile.entries.filter(active = True,is_pending=False)
 
     scoreTracker = {}
     annotated_users = activeUsers.annotate(most_recent_call=Max('completed_requests__time_of_call'))
@@ -37,7 +35,6 @@ def getBestRequest():
 
 def getPermission(request):
     user_id = request.POST.get('user_id')
-    
     priorityList = getUserPriorities(UserProfile.entries.filter(active=True))
 
     #if this user is in the top 20% of user priority
