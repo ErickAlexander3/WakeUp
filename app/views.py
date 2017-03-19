@@ -2,7 +2,7 @@
 Definition of views.
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
 from django.template import RequestContext
 from datetime import datetime
@@ -13,7 +13,7 @@ from twilio.rest import TwilioRestClient
 def home(request):
     """Renders the home page."""
     if request.user.is_authenticated():
-        return schedule_alarm(request)
+        return main(request)
 
     return render(
         request,
@@ -34,6 +34,10 @@ def active(request):
     return render(request, 'app/active.html', {'user_id':request.user.id})
 
 @login_required(login_url='/')
+def main(request):
+    return render(request, 'app/main.html', {'user_id':request.user.id})
+
+@login_required(login_url='/')
 def schedule_alarm(request):
     if request.method == 'POST':
         data = request.POST
@@ -43,6 +47,7 @@ def schedule_alarm(request):
         new_request = CallRequest.objects.create(requestee=request.user, description=data['description'], time_of_call=time_of_call)
         new_request.save()
         print("added request")
+        return redirect('app.views.main')
     return render(request, 'app/schedule_alarm.html', {'user_id':request.user.id})   
 
 @login_required(login_url='/')

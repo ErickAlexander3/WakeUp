@@ -7,6 +7,7 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.4/flatpickr.min.css" />
     <script>
         var user_id = {{user_id}};
     </script>
@@ -20,9 +21,9 @@
             Description:<br/>
             <input type="text" name="description" placeholder="Description"><br><br>
             Time Of Call:<br/>
-            <input type="datetime" name="time_of_call" placeholder="Time Of Call"><br><br />
+            <input id="time_of_call" type="datetime" name="time_of_call" placeholder="Time Of Call"><br><br />
             <button class="submit-now" type="submit" style="border: 0; background: transparent">
-                <img class="img-responsive center-elm" src="{% static 'app/content/images/start-now.png' %}" height="100" width="400" alt="submit"/>
+                <img class="img-responsive center-elm" src="{% static 'app/content/images/schedule-call.png' %}" height="100" width="400" alt="submit"/>
             </button>
         
         </form>
@@ -31,5 +32,10 @@
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.4.4/flatpickr.min.js"></script>
+
+    <script>
+        $('#time_of_call').flatpickr({enableTime: true});
+    </script>
     </body>
 </html>

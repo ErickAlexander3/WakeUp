@@ -18,6 +18,12 @@ body {
     padding-right: 15px;
 }
 
+.main-body {
+    background: url("images/main-background.jpg");
+    background-size: cover;
+	background-position: center;
+}
+
 #second-form {
     display: none;
 }
